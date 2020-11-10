@@ -16,8 +16,10 @@
   add_action('wp_enqueue_scripts', 'site_styles');
   function site_styles(){
     $version = '0.0.0.0';wp_dequeue_style( 'wp-block-library' );
+    wp_enqueue_style('wp-css', get_stylesheet_uri(), [], $version);
     wp_enqueue_style('bootstrap-grid', get_template_directory_uri().'/assets/css/bootstrap.min.css', [], $version);
     wp_enqueue_style('style-site', get_template_directory_uri().'/assets/css/style.css', [], $version);
+    wp_enqueue_style('custom', get_template_directory_uri().'/assets/css/custom.css', [], $version);
     wp_enqueue_style('fontawesome', get_template_directory_uri().'/assets/css/fontawesome.min.css', [], $version);
     //add_scripts();
     wp_enqueue_script('jquery', get_template_directory_uri().'/assets/js/jquery-3.3.1.min.js', [], $version, true);
@@ -38,4 +40,21 @@
   function register_carbon_fields() {
       require_once( 'includes/carbon-fields-options/theme-options.php' );
   }
- ?>
+
+  //регистрируем главное меню
+  add_action( 'after_setup_theme', 'theme_support' );
+  function theme_support() {
+	register_nav_menu( 'menu_main_header', 'Меню в шапке' );
+  }
+  //кастомизация главного меню под классы Bootstrap
+  function register_navwalker(){
+    require_once get_template_directory() . '/includes/wp-bootstrap-navwalker/class-wp-bootstrap-navwalker.php';
+  }
+  add_action( 'after_setup_theme', 'register_navwalker' );
+  //расширенная кастомизация главного меню под классы Bootstrap
+  /*function register_navwalker1(){
+    require_once get_template_directory() . '/includes/extendednav/extendednav.php';
+  }
+  add_action( 'after_setup_theme', 'register_navwalker1' );
+  //require_once get_template_directory() . '/includes/extendednav/extendednav.php';*/
+?>
