@@ -4,6 +4,7 @@ Template Name: Главная
 */
 ?>
 <?php get_header();?>
+      <div><?php echo get_the_ID() ?></div>
       <div id="home" class="slider">
          <div id="main_slider" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
